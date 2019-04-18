@@ -1,15 +1,39 @@
 import Vue from 'vue';
-import Router from 'vue-router';
-import HelloWorld from '@/components/HelloWorld';
+import VueRouter from 'vue-router';
+import union from 'lodash/union';
+import store from '@/store'
+import { Message } from 'element-ui'
 
-Vue.use(Router);
+import common from './common'; // dashboard,nopermission等全局路由
 
-export default new Router({
-  routes: [
+Vue.use(VueRouter);
+
+let routes = union(
+  [
     {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld,
+      path: '*',
+      redirect: {name: 'login'}
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/pages/login')
+    },
+    {
+      path: '/index',
+      component: () => import('@/pages/index'),
+      children: union(
+        user,
+        common
+      )
+    }
   ],
+  // 跟login同级的路由，如：关于我们
+  // view
+);
+
+let router = new VueRouter({
+  routes
 });
+
+export default router;

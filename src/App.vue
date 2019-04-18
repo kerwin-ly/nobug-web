@@ -1,23 +1,35 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
-  </div>
+<div id="app" v-loading="loading" element-loading-text="拼命加载中" element-loading-background="rgba(255,255,255,0.1)">
+    <router-view :style="{height:bgheight+'px'}"></router-view>
+</div>
 </template>
-
-<script>
-export default {
-  name: 'App',
-};
-</script>
-
-<style>
+<style lang="scss" scoped>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  min-width: 770px;
 }
 </style>
+<script>
+import { mapState } from 'vuex';
+export default {
+  name: 'app',
+  data () {
+    return {
+      bgheight: ''
+    };
+  },
+  mounted () {
+    this.bgheight = document.documentElement.clientHeight;
+  },
+  methods: {},
+  computed: {
+    ...mapState(['loading', 'loginDialog'])
+  },
+  watch: {
+    '$route.path': function (val, oldVal) {
+      if (this.$route.path === '/contactus') {
+        window.location.reload();
+      }
+    }
+  }
+};
+</script>
