@@ -1,1 +1,5 @@
-// api请求
+import * as userApi from './user';
+
+export {
+  userApi
+}

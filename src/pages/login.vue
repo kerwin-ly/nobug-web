@@ -3,7 +3,7 @@
     <div class="main">
         <div class="form-top">
           <div style="text-align:center;margin-top: 20px;">
-            <img src="../assets/img/logo.jpg" alt="" style="width:200px;display:inline-block" />
+            <img src="../assets/imgs/logo.png" alt="logo" style="width:200px;display:inline-block" />
           </div>
           <div class="form-top-left">
             <h3>Login to our site</h3>
@@ -73,7 +73,7 @@ export default {
 
 <style scoped>
 .bg {
-  background: url('../assets/img/bg.jpg') no-repeat center center fixed;
+  background: url('../assets/imgs/bg.jpg') no-repeat center center fixed;
   background-size: cover;
 }
 .main {

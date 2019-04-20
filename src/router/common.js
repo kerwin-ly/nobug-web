@@ -1,5 +1,4 @@
 // 全局公共路由
-import store from '@/store';
 
 export default [
   {

@@ -1,9 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import union from 'lodash/union';
-import store from '@/store'
-import { Message } from 'element-ui'
 
+import user from './user'; // 用户路由
 import common from './common'; // dashboard,nopermission等全局路由
 
 Vue.use(VueRouter);
@@ -12,7 +11,9 @@ let routes = union(
   [
     {
       path: '*',
-      redirect: {name: 'login'}
+      redirect: {
+        name: 'login'
+      }
     },
     {
       path: '/login',

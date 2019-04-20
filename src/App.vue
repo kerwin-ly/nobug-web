@@ -1,6 +1,6 @@
 <template>
 <div id="app" v-loading="loading" element-loading-text="拼命加载中" element-loading-background="rgba(255,255,255,0.1)">
-    <router-view :style="{height:bgheight+'px'}"></router-view>
+  <router-view :style="{height:bgheight+'px'}"></router-view>
 </div>
 </template>
 <style lang="scss" scoped>
@@ -14,22 +14,14 @@ export default {
   name: 'app',
   data () {
     return {
-      bgheight: ''
+      bgheight: 0
     };
   },
   mounted () {
     this.bgheight = document.documentElement.clientHeight;
   },
-  methods: {},
   computed: {
-    ...mapState(['loading', 'loginDialog'])
-  },
-  watch: {
-    '$route.path': function (val, oldVal) {
-      if (this.$route.path === '/contactus') {
-        window.location.reload();
-      }
-    }
+    ...mapState(['loading'])
   }
 };
 </script>
