@@ -1,38 +1,38 @@
 <template>
   <div class="bg">
     <div class="main">
-        <div class="form-top">
-          <div style="text-align:center;margin-top: 20px;">
-            <img src="../assets/imgs/logo.png" alt="logo" style="width:200px;display:inline-block" />
-          </div>
-          <div class="form-top-left">
-            <h3>Login to our site</h3>
-              <p>Enter your username and password to log on:</p>
-          </div>
-          <div class="form-top-right">
-            <i class="fa fa-lock"></i>
-          </div>
+      <div class="form-top">
+        <div style="text-align:center;margin-top: 20px;">
+          <img src="../assets/imgs/logo.png" alt="logo" style="width:200px;display:inline-block" />
         </div>
-        <div class="form-bottom">
-          <div class="login-form">
+        <div class="form-top-left">
+          <h3>Login to our site</h3>
+            <p>Enter your username and password to log on:</p>
+        </div>
+        <div class="form-top-right">
+          <i class="fa fa-lock"></i>
+        </div>
+      </div>
+      <div class="form-bottom">
+        <div class="login-form">
+          <div class="form-group">
+            <label class="sr-only" for="form-username">Username</label>
+              <input type="text" v-model="loginForm.username" placeholder="Username..." class="form-username form-control" id="form-username" style="padding:0px;">
+            </div>
             <div class="form-group">
-              <label class="sr-only" for="form-username">Username</label>
-                <input type="text" v-model="loginForm.username" placeholder="Username..." class="form-username form-control" id="form-username" style="padding:0px;">
-              </div>
-              <div class="form-group">
-                <label class="sr-only" for="form-password">Password</label>
-                <input type="password" v-model="loginForm.password" placeholder="Password..." class="form-password form-control" id="form-password" style="padding:0px;">
-              </div>
-              <button class="btn" style="cursor:pointer;margin-left:2px;width:100%;" @click="login">{{logining ? '登录中' : '登录'}}<i class="el-icon-loading" v-show="logining"></i></button>
-          </div>
+              <label class="sr-only" for="form-password">Password</label>
+              <input type="password" v-model="loginForm.password" placeholder="Password..." class="form-password form-control" id="form-password" style="padding:0px;">
+            </div>
+            <button class="btn" style="cursor:pointer;margin-left:2px;width:100%;" @click="login">{{logining ? '登录中' : '登录'}}<i class="el-icon-loading" v-show="logining"></i></button>
         </div>
+      </div>
       </div>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       loginForm: {
         username: '',
@@ -42,30 +42,8 @@ export default {
     };
   },
   methods: {
-    login () {
-      if (this.loginForm.username && this.loginForm.password) {
-        this.logining = true;
-        this._post({
-          url: '/admin/user/login',
-          data: {
-            name: this.loginForm.username,
-            password: this.loginForm.password
-          },
-          success: res => {
-            this.$router.push({
-              name: 'MeetingList'
-            });
-          },
-          error: res => {
-            this.$message.error('账号密码错误');
-          },
-          default: () => {
-            this.logining = false;
-          }
-        });
-      } else {
-        this.$message.error('请输入用户名和密码');
-      }
+    login() {
+
     }
   }
 };

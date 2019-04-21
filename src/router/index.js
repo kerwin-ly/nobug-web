@@ -33,7 +33,7 @@ let routes = union(
   // view
 );
 
-let router = new VueRouter({
+const router = new VueRouter({
   routes
 });
 

@@ -1,10 +1,10 @@
 import {
   SETLOADING
-} from './mutation-types.js';
+} from './mutation-types';
 
 export default {
   // 加载中动画
-  [SETLOADING] (state, isLoading) {
+  [SETLOADING](state, isLoading) {
     state.loading = isLoading;
   }
 };

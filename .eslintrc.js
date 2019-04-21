@@ -45,6 +45,17 @@ module.exports = {
       optionalDependencies: ['test/unit/index.js']
     }],
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    "no-console": 0, // 禁止console
+    'import/prefer-default-export': 0, // 是否默认只有一个export时，必须export default
+    'no-lonely-if': 0, // 是否防止无意义的if else嵌套
+    'import/no-unresolved': 0, // 关闭局部引入报错
+    'comma-dangle': ["error", "never"], // 对象末尾不能有逗号
+    'arrow-body-style': 0, // 关闭不必要的return
+    'array-callback-return': 0, // 关闭数据map，reduce等必须return。
+    'consistent-return': 0, // 关闭箭头函数必须返回return
+    'prefer-const': 0, // 尽量使用const
+    'max-len': 0, // 每行最多100字符
+    'no-new': 0
   }
 }
