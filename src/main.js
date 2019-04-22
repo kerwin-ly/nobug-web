@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import 'babel-polyfill'; // 兼容处理
 import 'element-ui/lib/theme-chalk/index.css'; // element样式单独引入
+import '@/style/theme.scss'; // element主题色
 import '@/style/common.scss'; // 全局公共样式
 import '@/style/reset.scss'; // 重置css样式
 

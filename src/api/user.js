@@ -2,11 +2,11 @@
 import $axios from './axios';
 
 /**
- * 登陆
+ * 注册
  */
 export const login = (data) => {
   return $axios({
-    url: '',
+    url: '/user/login',
     method: 'POST',
     data
   });

@@ -56,6 +56,8 @@ module.exports = {
     'consistent-return': 0, // 关闭箭头函数必须返回return
     'prefer-const': 0, // 尽量使用const
     'max-len': 0, // 每行最多100字符
-    'no-new': 0
+    'no-new': 0, // 强迫new
+    'class-methods-use-this': 0, // class内尽量用this
+    'no-use-before-define': 0 // 定义之后再使用
   }
 }
