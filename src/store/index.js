@@ -7,7 +7,8 @@ import getters from './getters';
 Vue.use(Vuex);
 
 const state = {
-  loading: false // 加载中状态
+  loading: false, // 加载中状态
+  lock: false // 互斥锁
 };
 
 export default new Vuex.Store({

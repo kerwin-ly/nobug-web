@@ -54,11 +54,8 @@ axios.interceptors.response.use((data) => {
         case 201:
           break;
         case 401:
-          if (window.sessionStorage.is_api) {
-            store.commit('SETLOGINDIALOG', true);
-          } else {
-            router.replace({ path: '/login' });
-          }
+          Message.warning('登录超时');
+          router.replace({ path: '/login' });
           break;
         case 403:
           Message.error('无操作权限');
@@ -86,20 +83,18 @@ axios.interceptors.response.use((data) => {
 });
 
 export default function $axios(options) {
-  tempOptions = options;
-
   return new Promise((resolve, reject) => {
     let requestUrl = '';
     let requestParams = {};
 
-    if (options.method === 'get') {
+    if (options.method.toLowerCase() === 'get') {
       const config = getRequestConfig(options);
 
       requestUrl = config.url;
       requestParams = {
         params: config.data
       };
-    } else if (options.method === 'post') {
+    } else if (options.method.toLowerCase() === 'post') {
       requestUrl = options.url;
       requestParams = options.data;
     }
@@ -107,7 +102,7 @@ export default function $axios(options) {
     axios[options.method](requestUrl, requestParams)
       .then((res) => {
         if (res.data && res.data.status === 200) {
-          resolve(res);
+          resolve(res.data);
         }
       })
       .catch((error) => {

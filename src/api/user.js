@@ -6,8 +6,8 @@ import $axios from './axios';
  */
 export const login = (data) => {
   return $axios({
-    url: '/user/login',
-    method: 'POST',
+    url: 'user/login',
+    method: 'post',
     data
   });
 };
