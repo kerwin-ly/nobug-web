@@ -2,25 +2,28 @@
   <el-container>
     <el-main class="wrapper">
       <div class="box">
-        <header>
-          <img src="../assets/imgs/logo.png" class="logo" />
+        <header class="header">
+          <img src="../../assets/imgs/logo.png" class="logo" />
+          <p class="advertisement">Monitor your bugs and fix it efficiently</p>
         </header>
         <div class="form-wrapper">
-          <el-form :model="loginForm" :rules="loginRules" ref="loginForm" status-icon class="demo-ruleForm">
-            <el-form-item label="用户名" prop="username">
-              <el-input v-model="loginForm.username" placeholder="请输入用户名" auto-complete="off"></el-input>
+          <el-form :model="registerForm" :rules="registerRules" ref="registerForm" status-icon>
+            <el-form-item prop="name">
+              <el-input v-model="registerForm.name" placeholder="请输入用户名" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="密  码" prop="password">
-              <el-input type="password" v-model="loginForm.password" placeholder="请输入密码" auto-complete="off"></el-input>
+            <el-form-item prop="email">
+              <el-input v-model="registerForm.email" placeholder="请输入邮箱" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input type="password" v-model="registerForm.password" placeholder="请输入密码" auto-complete="off"></el-input>
             </el-form-item>
           </el-form>
           <footer class="footer">
-            <el-button type="primary" class="login-btn" @click="login">登录</el-button>
-            <p>忘记密码？</p>
+            <el-button type="primary" class="register-btn" @click="register">注册</el-button>
             <hr>
-            <div class="register-wrapper">
-              <span style="font-size: 14px;">还没有账号？</span>
-              <el-button type="text">免费注册</el-button>
+            <div class="login-wrapper">
+              <span style="font-size: 14px;">已有账号？</span>
+              <el-button type="text" @click="navigateLogin">立即登录</el-button>
             </div>
           </footer>
         </div>
@@ -30,7 +33,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '../style/constant.scss';
+@import '../../style/constant.scss';
 
 .wrapper {
   display: flex;
@@ -48,10 +51,18 @@
     padding-top: 5rem;
     padding-bottom: 5rem;
 
-    .logo {
-      display: inline-block;
-      margin-bottom: 20px;
-      height: 50px;
+    .header {
+      margin-bottom: 5rem;
+
+      .logo {
+        display: inline-block;
+        height: 50px;
+      }
+      .advertisement {
+        margin-top: 20px;
+        margin-bottom: 0;
+        font-weight: 300;
+      }
     }
     .form-wrapper {
       padding-left: 80px;
@@ -62,7 +73,7 @@
       padding-bottom: 10px;
       width: 100%;
 
-      .login-btn {
+      .register-btn {
         width: 100%;
       }
       p {
@@ -80,14 +91,10 @@
         border: 0;
         border-top: 1px solid #eee;
       }
-      .register-wrapper {
+      .login-wrapper {
         width: 100%;
         border: 1px solid #e4e5e7;
         border-radius: 3px;
-
-        .register-text {
-          color: $primary;
-        }
       }
     }
   }
@@ -101,13 +108,19 @@ import { userApi } from '@api';
 export default {
   data() {
     return {
-      loginForm: {
-        username: 'kerwin',
-        password: 'liyi**1021'
+      registerForm: {
+        name: '',
+        email: '',
+        password: ''
       },
-      loginRules: {
-        username: [{
+      registerRules: {
+        name: [{
           required: true, message: '请输入用户名', trigger: 'blur'
+        }],
+        email: [{
+          required: true, message: '请输入邮箱', trigger: 'blur'
+        }, {
+          validator: validate.validateEmail, trigger: 'blur'
         }],
         password: [{
           required: true, message: '请输入密码', trigger: 'blur'
@@ -118,10 +131,10 @@ export default {
     };
   },
   methods: {
-    login() {
-      this.$refs.loginForm.validate((valid) => {
+    register() {
+      this.$refs.registerForm.validate((valid) => {
         if (valid) {
-          userApi.login(this.loginForm)
+          userApi.register(this.registerForm)
             .then((res) => {
               console.log(res);
             })
@@ -129,6 +142,11 @@ export default {
               console.log(error);
             });
         }
+      });
+    },
+    navigateLogin() {
+      this.$router.push({
+        name: 'login'
       });
     }
   }

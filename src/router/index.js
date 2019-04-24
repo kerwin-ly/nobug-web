@@ -4,6 +4,7 @@ import union from 'lodash/union';
 
 import user from './user'; // 用户路由
 import common from './common'; // dashboard,nopermission等全局路由
+import views from './views';
 
 Vue.use(VueRouter);
 
@@ -18,19 +19,19 @@ let routes = union(
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/pages/login')
+      component: () => import('@/pages/views/login')
     },
     {
       path: '/index',
-      component: () => import('@/pages/index'),
+      component: () => import('@/pages/views/index'),
       children: union(
         user,
         common
       )
     }
   ],
-  // 跟login同级的路由，如：关于我们
-  // view
+  // 一级路由
+  views
 );
 
 const router = new VueRouter({
