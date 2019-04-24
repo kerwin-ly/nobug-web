@@ -5,14 +5,17 @@ import '@/style/theme.scss'; // element主题色
 import '@/style/common.scss'; // 全局公共样式
 import '@/style/reset.scss'; // 重置css样式
 
+// 全局组件
+import Icon from '@/components/common/icon';
+
 // vue相关插件
 import ElementUI from 'element-ui'; // element-ui
 import router from './router'; // 引用路由
 import store from './store';
-
 import App from './App';
 
-// 框架使用
+// 组件
+Vue.component('icon', Icon);
 Vue.use(ElementUI);
 
 new Vue({

@@ -26,7 +26,7 @@ axios.interceptors.request.use(
     }
     if (tempOptions.method === 'post') {
       if (store.state.lock) {
-        store.commit('SETLOCK', false);
+        store.commit('SETLOCK', true);
       } else {
         source.cancel('取消请求');
       }
@@ -110,7 +110,7 @@ export default function $axios(options) {
       })
       .finally(() => {
         store.commit('SETLOADING', false);
-        store.commit('SETLOCK', true);
+        store.commit('SETLOCK', false);
       });
   });
 }

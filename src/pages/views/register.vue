@@ -135,12 +135,13 @@ export default {
       this.$refs.registerForm.validate((valid) => {
         if (valid) {
           userApi.register(this.registerForm)
-            .then((res) => {
-              console.log(res);
+            .then(() => {
+              this.$message.success('注册成功');
+              this.$router.push({
+                name: 'login'
+              });
             })
-            .catch((error) => {
-              console.log(error);
-            });
+            .catch(() => {});
         }
       });
     },

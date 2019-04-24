@@ -1,6 +1,7 @@
 import {
   SETLOADING,
-  SETLOCK
+  SETLOCK,
+  SETUSERINFO
 } from './mutation-types';
 
 export default {
@@ -11,5 +12,9 @@ export default {
   // 设置互斥锁
   [SETLOCK](state, isLock) {
     state.loading = isLock;
+  },
+  // 保存用户信息
+  [SETUSERINFO](state, userInfo) {
+    state.userInfo = userInfo;
   }
 };

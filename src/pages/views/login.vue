@@ -16,7 +16,7 @@
             </el-form-item>
           </el-form>
           <footer class="footer">
-            <el-button type="primary" class="login-btn" @click="login">登录</el-button>
+            <el-button type="primary" class="login-btn" @click="login" :loading="lock">登录</el-button>
             <p>忘记密码？</p>
             <hr>
             <div class="register-wrapper">
@@ -102,13 +102,14 @@
 <script>
 import { validate } from '@/utils/form';
 import { userApi } from '@api';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   data() {
     return {
       loginForm: {
-        email: '',
-        password: ''
+        email: '879688355@qq.com',
+        password: 'liyi**1021'
       },
       loginRules: {
         email: [{
@@ -124,17 +125,22 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapState(['lock'])
+  },
   methods: {
+    ...mapMutations(['SETUSERINFO']),
     login() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           userApi.login(this.loginForm)
             .then((res) => {
-              console.log(res);
+              this.SETUSERINFO(res.data);
+              this.$router.push({
+                name: 'index'
+              });
             })
-            .catch((error) => {
-              console.log(error);
-            });
+            .catch(() => {});
         }
       });
     },
