@@ -16,6 +16,17 @@ time, mark, audio, video {
 	border: 0;
 	vertical-align: baseline;
 }
+hr {
+	display: block;
+	unicode-bidi: isolate;
+	margin-block-start: 0.5em;
+	margin-block-end: 0.5em;
+	margin-inline-start: auto;
+	margin-inline-end: auto;
+	overflow: hidden;
+	border-style: inset;
+	border-width: 1px;
+}
 body {
 	color: #6a6c6f;
 	margin: 0;
@@ -50,4 +61,13 @@ a:hover, a:active {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+
+.clear:after {
+	display: block;
+	clear: both;
+	height: 0;
+	content: "";
+	visibility: hidden;
+	overflow: hidden;
 }

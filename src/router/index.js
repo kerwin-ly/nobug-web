@@ -2,9 +2,10 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import union from 'lodash/union';
 
+import views from './views'; // 一级路由
 import user from './user'; // 用户路由
 import common from './common'; // dashboard,nopermission等全局路由
-import views from './views';
+import project from './project'; // project route
 
 Vue.use(VueRouter);
 
@@ -27,7 +28,8 @@ let routes = union(
       component: () => import('@/pages/views/index'),
       children: union(
         user,
-        common
+        common,
+        project
       )
     }
   ],

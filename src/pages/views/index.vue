@@ -15,23 +15,30 @@
               <icon name="sort-down" class="sort-down" />
             </div>
             <ul class="user-dropdown-menu" v-show="isShowUserSelect">
-              <li>123</li>
-              <li>123</li>
-              <li>123</li>
+              <li>
+                <a>
+                  <icon name="user"/>个人信息
+                </a>
+              </li>
+              <li>
+                <a>
+                  <icon name="vcard" />
+                  账号设置
+                </a>
+              </li>
+              <li class="exit">
+                <a>
+                  <icon name="power-off" />
+                  退出
+                </a>
+              </li>
             </ul>
           </li>
         </ul>
       </div>
     </el-header>
-    <el-main class="main">
-      <header class="main-header">
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-          <el-menu-item v-for="(item, index) in menus" :index="String(index)" :key="index">
-            <icon :name="item.icon" />
-            {{ item.title }}
-          </el-menu-item>
-        </el-menu>
-      </header>
+    <el-main class="main" id="content">
+      <router-view></router-view>
     </el-main>
   </el-container>
 </template>
@@ -95,10 +102,35 @@
         .user-dropdown-menu {
           position: absolute;
           z-index: 1000;
-          right: 0;
+          right: -20px;
           top: 60px;
-          width: 240px;
+          width: 160px;
           background-color: #fff;
+          font-size: 13px;
+          box-shadow: 0 6px 12px rgba(0,0,0,.1);
+          color: #333;
+
+          li {
+            padding: 0;
+            background: #FFF;
+            width: 100%;
+            height: 36px;
+            line-height: 36px;
+
+            a {
+              i {
+                padding-right: 5px;
+              }
+              padding: 15px;
+            }
+          }
+          .exit {
+            border-top: 1px solid #e4e5e7;
+            text-align: center;
+          }
+          li:hover {
+            background-color: #f1f3f6;
+          }
         }
       }
       li:hover {
@@ -110,16 +142,6 @@
 }
 .main {
   padding: 0;
-
-  .main-header {
-    padding-left: 20px;
-    padding-right: 20px;
-    background: #fff;
-  }
-  .el-menu--horizontal > .el-menu-item {
-    height: 46px;
-    line-height: 46px;
-  }
 }
 
 </style>
@@ -149,6 +171,13 @@ export default {
   },
   computed: {
     ...mapState(['userInfo'])
+  },
+  mounted() {
+    document.getElementById('content').onclick = () => {
+      if (this.isShowUserSelect) {
+        this.isShowUserSelect = false;
+      }
+    };
   },
   methods: {
     handleSelect() {},
