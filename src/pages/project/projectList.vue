@@ -33,6 +33,23 @@
         </el-col>
       </el-row>
     </div>
+    <el-dialog title="创建项目" :visible.sync="isShowProjectDialog">
+      <el-form :model="projectForm" label-width="100px">
+        <el-form-item label="项目名称" :label-width="formLabelWidth">
+          <el-input v-model="projectForm.name" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="项目背景" :label-width="formLabelWidth">
+          <el-input v-model="projectForm.backgroundColor" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="项目描述" :label-width="formLabelWidth">
+          <el-input type="textarea" v-model="projectForm.description" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      </div>
+    </el-dialog>
   </section>
 </template>
 
@@ -179,11 +196,19 @@ export default {
         color: 'red',
         creator: 'kerwin',
         members: 3
-      }]
+      }],
+      isShowProjectDialog: false,
+      projectForm: {
+        name: '',
+        backgroundColor: '',
+        description: ''
+      }
     };
   },
   methods: {
-    addProject() {},
+    addProject() {
+      this.isShowProjectDialog = true;
+    },
     getProjectDetail() {}
   }
 };
