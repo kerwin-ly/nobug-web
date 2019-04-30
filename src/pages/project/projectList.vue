@@ -17,16 +17,16 @@
       <el-row class="project-list-content">
         <el-col :log="3" :md="3" :sm="6" class="project-item" v-for="(item, index) in projectList" :key="index">
           <div class="project-item-main" @click="getProjectDetail">
-            <div class="project-index-header" :style="{backgroundColor: item.color}">
-              <a>{{ item.name }}</a>
+            <div class="project-index-header" :style="{backgroundColor: item.projectColor}">
+              <a>{{ item.projectName }}</a>
             </div>
             <div class="project-index-content clear">
-              <span class="creator" :style="{color: item.color}">
-                {{ item.creator }}
+              <span class="creator" :style="{color: item.projectColor}">
+                {{ item.projectCreator }}
               </span>
               <span class="members-num">
                 <icon name="user" />
-                <a>{{ item.members }}</a>
+                <a>待开发</a>
               </span>
             </div>
           </div>
@@ -34,20 +34,24 @@
       </el-row>
     </div>
     <el-dialog title="创建项目" :visible.sync="isShowProjectDialog">
-      <el-form :model="projectForm" label-width="100px">
-        <el-form-item label="项目名称" :label-width="formLabelWidth">
+      <el-form :model="projectForm" label-width="100px" :rules="projectRules" ref="projectForm" status-icon>
+        <el-form-item label="项目名称" prop="name">
           <el-input v-model="projectForm.name" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="项目背景" :label-width="formLabelWidth">
-          <el-input v-model="projectForm.backgroundColor" auto-complete="off"></el-input>
+        <el-form-item label="项目背景" prop="backgroundColor">
+          <el-color-picker
+            v-model="projectForm.backgroundColor"
+            show-alpha
+            :predefine="predefineColors">
+          </el-color-picker>
         </el-form-item>
-        <el-form-item label="项目描述" :label-width="formLabelWidth">
+        <el-form-item label="项目描述">
           <el-input type="textarea" v-model="projectForm.description" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button @click="isShowProjectDialog = false">取 消</el-button>
+        <el-button type="primary" @click="submitProjet">确 定</el-button>
       </div>
     </el-dialog>
   </section>
@@ -168,48 +172,58 @@
 </style>
 
 <script>
+import { projectApi } from '@api';
+import { predefineColors } from '@config';
+
 export default {
   data() {
     return {
-      projectList: [{
-        name: 'demo test',
-        color: 'red',
-        creator: 'kerwin',
-        members: 3
-      }, {
-        name: 'demo test',
-        color: 'red',
-        creator: 'kerwin',
-        members: 3
-      }, {
-        name: 'demo test',
-        color: 'red',
-        creator: 'kerwin',
-        members: 3
-      }, {
-        name: 'demo test',
-        color: 'red',
-        creator: 'kerwin',
-        members: 3
-      }, {
-        name: 'demo test',
-        color: 'red',
-        creator: 'kerwin',
-        members: 3
-      }],
+      projectList: [],
       isShowProjectDialog: false,
       projectForm: {
         name: '',
         backgroundColor: '',
         description: ''
-      }
+      },
+      projectRules: {
+        name: [{
+          required: true, message: '请输入项目名称', trigger: 'blur'
+        }],
+        backgroundColor: [{
+          required: true, message: '请选择项目背景', trigger: 'blur'
+        }]
+      },
+      predefineColors
     };
   },
+  mounted() {
+    this.getProjectList();
+  },
   methods: {
+    getProjectList() {
+      projectApi.getProjectList()
+        .then((res) => {
+          this.projectList = res.data;
+        });
+    },
     addProject() {
       this.isShowProjectDialog = true;
     },
+    submitProjet() {
+      projectApi.addProject(this.projectForm)
+        .then(() => {
+          this.$message.success('新增成功');
+          this.getProjectList();
+        });
+    },
     getProjectDetail() {}
+  },
+  watch: {
+    isShowProjectDialog(newVal) {
+      if (!newVal) {
+        this.$refs.projectForm.resetFields();
+      }
+    }
   }
 };
 </script>

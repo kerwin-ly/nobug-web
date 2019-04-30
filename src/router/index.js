@@ -24,7 +24,6 @@ let routes = union(
     },
     {
       path: '/index',
-      name: 'index',
       component: () => import('@/pages/views/index'),
       children: union(
         user,

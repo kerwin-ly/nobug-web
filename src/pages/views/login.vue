@@ -137,7 +137,7 @@ export default {
             .then((res) => {
               this.SETUSERINFO(res.data);
               this.$router.push({
-                name: 'index'
+                path: '/index'
               });
             })
             .catch(() => {});
