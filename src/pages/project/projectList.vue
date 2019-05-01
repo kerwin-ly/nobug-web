@@ -213,6 +213,7 @@ export default {
       projectApi.addProject(this.projectForm)
         .then(() => {
           this.$message.success('新增成功');
+          this.isShowProjectDialog = false;
           this.getProjectList();
         });
     },
