@@ -63,6 +63,7 @@
     min-width: 320px;
 
     .project-add-wrapper {
+      display: inline-block;
 
       .add-circle {
         display: inline-block;

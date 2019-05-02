@@ -16,21 +16,19 @@
             </div>
             <ul class="user-dropdown-menu" v-show="isShowUserSelect">
               <li>
-                <a>
+                <router-link :to="{ name: 'userCenter' }">
                   <icon name="user"/>个人信息
-                </a>
+                </router-link>
               </li>
               <li>
-                <a>
-                  <icon name="vcard" />
-                  账号设置
-                </a>
+                <router-link :to="{ name: 'userCenter' }">
+                  <icon name="vcard"/>账号设置
+                </router-link>
               </li>
               <li class="exit">
-                <a>
-                  <icon name="power-off" />
-                  退出
-                </a>
+                <router-link :to="{ name: 'userCenter' }">
+                  <icon name="power-off"/>退出
+                </router-link>
               </li>
             </ul>
           </li>
