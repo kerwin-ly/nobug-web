@@ -22,13 +22,13 @@
               </li>
               <li>
                 <router-link :to="{ name: 'userCenter' }">
-                  <icon name="vcard"/>账号设置
+                  <icon name="vcard"/>修改密码
                 </router-link>
               </li>
               <li class="exit">
-                <router-link :to="{ name: 'userCenter' }">
+                <a @click="logout">
                   <icon name="power-off"/>退出
-                </router-link>
+                </a>
               </li>
             </ul>
           </li>
@@ -146,24 +146,25 @@
 
 <script>
 import { mapState } from 'vuex';
+import { userApi } from '@api';
 
 export default {
   data() {
     return {
-      activeIndex: '0',
-      menus: [{
-        icon: 'navicon',
-        title: '概览'
-      }, {
-        icon: 'file',
-        title: '问题'
-      }, {
-        icon: 'bar-chart',
-        title: '统计'
-      }, {
-        icon: 'cog',
-        title: '设置'
-      }],
+      // activeIndex: '0',
+      // menus: [{
+      //   icon: 'navicon',
+      //   title: '概览'
+      // }, {
+      //   icon: 'file',
+      //   title: '问题'
+      // }, {
+      //   icon: 'bar-chart',
+      //   title: '统计'
+      // }, {
+      //   icon: 'cog',
+      //   title: '设置'
+      // }],
       isShowUserSelect: false
     };
   },
@@ -178,9 +179,18 @@ export default {
     };
   },
   methods: {
-    handleSelect() {},
     toggleUserMenus() {
       this.isShowUserSelect = !this.isShowUserSelect;
+    },
+    logout() {
+      userApi.logout()
+        .then(() => {
+          this.$message.success('退出成功');
+          this.$router.push({
+            name: 'login'
+          });
+        })
+        .catch(() => {});
     }
   }
 };

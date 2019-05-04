@@ -22,3 +22,13 @@ export const register = (data) => {
     data
   });
 };
+
+/**
+ * 注销接口
+ */
+export const logout = () => {
+  return $axios({
+    url: 'user/logout',
+    method: 'get'
+  });
+};
