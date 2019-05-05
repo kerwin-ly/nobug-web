@@ -173,8 +173,8 @@
 </style>
 
 <script>
-import { projectApi } from '@api';
-import { predefineColors } from '@config';
+import { projectApi } from '@/api';
+import { predefineColors } from '@/config';
 
 export default {
   data() {

@@ -42,6 +42,8 @@
 </template>
 
 <style lang="scss" scoped>
+@import '../../style/mixin';
+
 .nav-header {
   background-color: #1e384c !important;
   color: #fff;
@@ -85,6 +87,8 @@
             text-align: center;
           }
           .user {
+            @include textOverflow(60px);
+
             display: inline-block;
             color: #FFF;
             font-size: 14px;
@@ -146,7 +150,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { userApi } from '@api';
+import { userApi } from '@/api';
 
 export default {
   data() {

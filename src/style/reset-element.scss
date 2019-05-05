@@ -1,7 +1,13 @@
+// 重置input框架border
 .el-input__inner {
   border-top-width: 0;
   border-left-width: 0;
   border-right-width: 0;
   border-bottom-width: 1px;
   border-radius: 0 !important;
+}
+
+// 重置input禁用颜色为空
+.el-input.is-disabled .el-input__inner {
+  background-color: transparent;
 }

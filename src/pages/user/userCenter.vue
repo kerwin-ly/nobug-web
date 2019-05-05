@@ -8,12 +8,18 @@
           <div>
             <h2 class="user-name" v-text="userInfo.name"></h2>
           </div>
+          <el-form-item label="邮箱" prop="email">
+            <el-input v-model="userForm.email" auto-complete="off" disabled></el-input>
+          </el-form-item>
           <el-form-item label="用户名" prop="name">
             <el-input v-model="userForm.name" auto-complete="off"></el-input>
           </el-form-item>
+          <el-form-item label="联系方式" prop="phone">
+            <el-input v-model="userForm.phone" auto-complete="off"></el-input>
+          </el-form-item>
           <el-form-item style="text-align: right;">
-            <el-button>取消</el-button>
-            <el-button type="primary">保 存</el-button>
+            <el-button @click="init">取消</el-button>
+            <el-button type="primary" @click="submitUserInfo">保 存</el-button>
           </el-form-item>
         </el-form>
     </box>
@@ -67,7 +73,9 @@ $avatarWh: 200px;
 
 <script>
 import box from '@/components/common/box';
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
+import { validate } from '@/utils';
+import { userApi } from '@/api';
 
 export default {
   components: {
@@ -76,12 +84,45 @@ export default {
   data() {
     return {
       userForm: {},
-      userRules: {}
+      userRules: {
+        email: {
+          required: true, message: '请输入邮箱', trigger: 'blur'
+        },
+        name: {
+          required: true, message: '请输入用户名', trigger: 'blur'
+        },
+        phone: [{
+          required: true, message: '请输入手机号', trigger: 'blur'
+        }, {
+          validator: validate.validatePhone, trigger: 'blur'
+        }]
+      }
     };
+  },
+  mounted() {
+    this.init();
   },
   computed: {
     ...mapState(['userInfo'])
+  },
+  methods: {
+    ...mapMutations(['SETUSERINFO']),
+    init() {
+      this.userForm = {
+        ...this.userInfo
+      };
+    },
+    submitUserInfo() {
+      this.$refs.userForm.validate((valid) => {
+        if (valid) {
+          userApi.updateUserInfo(this.userForm)
+            .then(() => {
+              this.$message.success('操作成功');
+              this.SETUSERINFO(this.userInfo);
+            });
+        }
+      });
+    }
   }
 };
 </script>
-

@@ -3,6 +3,7 @@ import $axios from './axios';
 
 /**
  * 登录接口
+ * @param data
  */
 export const login = (data) => {
   return $axios({
@@ -14,6 +15,7 @@ export const login = (data) => {
 
 /**
  * 注册接口
+ * @param data
  */
 export const register = (data) => {
   return $axios({
@@ -30,5 +32,17 @@ export const logout = () => {
   return $axios({
     url: 'user/logout',
     method: 'get'
+  });
+};
+
+/**
+ * 更新用户信息
+ * @param data
+ */
+export const updateUserInfo = (data) => {
+  return $axios({
+    url: 'user/update',
+    method: 'post',
+    data
   });
 };

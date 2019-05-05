@@ -102,8 +102,8 @@
 </style>
 
 <script>
-import { validate } from '@/utils/form';
-import { userApi } from '@api';
+import { validate } from '@/utils';
+import { userApi } from '@/api';
 
 export default {
   data() {

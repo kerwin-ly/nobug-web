@@ -28,4 +28,12 @@ export default new class Validate {
       callback();
     }
   }
+  validatePhone(rule, value, callback) {
+    let reg = /^((((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8}))$/;
+    if (value !== '' && value != null && !reg.test(value)) {
+      callback(new Error('请输入正确的手机号'));
+    } else {
+      callback();
+    }
+  }
 }();
