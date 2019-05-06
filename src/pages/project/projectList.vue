@@ -174,7 +174,7 @@
 
 <script>
 import { projectApi } from '@/api';
-import { predefineColors } from '@/config';
+import { predefineColors, defaultColor } from '@/config';
 
 export default {
   data() {
@@ -211,7 +211,10 @@ export default {
       this.isShowProjectDialog = true;
     },
     submitProjet() {
-      projectApi.addProject(this.projectForm)
+      projectApi.addProject({
+        ...this.projectForm,
+        backgroundColor: this.projectForm.backgroundColor || defaultColor
+      })
         .then(() => {
           this.$message.success('新增成功');
           this.isShowProjectDialog = false;

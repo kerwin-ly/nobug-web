@@ -14,3 +14,5 @@ export const predefineColors = [
   'hsla(209, 100%, 56%, 0.73)',
   '#c7158577'
 ];
+
+export const defaultColor = '#ff4500';

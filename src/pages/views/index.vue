@@ -61,7 +61,7 @@
       img {
         float: left;
         width: 120px;
-        padding: 12px 12px 18px 18px;
+        padding: 14px 14px 18px 18px;
       }
     }
   }
@@ -89,7 +89,6 @@
           .user {
             @include textOverflow(60px);
 
-            display: inline-block;
             color: #FFF;
             font-size: 14px;
             padding-left: 10px;
@@ -155,20 +154,6 @@ import { userApi } from '@/api';
 export default {
   data() {
     return {
-      // activeIndex: '0',
-      // menus: [{
-      //   icon: 'navicon',
-      //   title: '概览'
-      // }, {
-      //   icon: 'file',
-      //   title: '问题'
-      // }, {
-      //   icon: 'bar-chart',
-      //   title: '统计'
-      // }, {
-      //   icon: 'cog',
-      //   title: '设置'
-      // }],
       isShowUserSelect: false
     };
   },

@@ -1,6 +1,7 @@
 // 一些配置信息
-import { predefineColors } from './color';
+import { predefineColors, defaultColor } from './color';
 
 export {
-  predefineColors
+  predefineColors,
+  defaultColor
 };

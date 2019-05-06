@@ -12,14 +12,13 @@
             <el-input v-model="userForm.email" auto-complete="off" disabled></el-input>
           </el-form-item>
           <el-form-item label="用户名" prop="name">
-            <el-input v-model="userForm.name" auto-complete="off"></el-input>
+            <el-input v-model="userForm.name" auto-complete="off" :disabled="isDisabled"></el-input>
           </el-form-item>
           <el-form-item label="联系方式" prop="phone">
-            <el-input v-model="userForm.phone" auto-complete="off"></el-input>
+            <el-input v-model="userForm.phone" auto-complete="off" :disabled="isDisabled"></el-input>
           </el-form-item>
           <el-form-item style="text-align: right;">
-            <el-button @click="init">取消</el-button>
-            <el-button type="primary" @click="submitUserInfo">保 存</el-button>
+            <el-button type="primary" @click="updateUserInfo">{{ this.isDisabled ? '编 辑' : '保 存' }}</el-button>
           </el-form-item>
         </el-form>
     </box>
@@ -96,7 +95,8 @@ export default {
         }, {
           validator: validate.validatePhone, trigger: 'blur'
         }]
-      }
+      },
+      isDisabled: true
     };
   },
   mounted() {
@@ -112,6 +112,13 @@ export default {
         ...this.userInfo
       };
     },
+    updateUserInfo() {
+      if (this.isDisabled) {
+        this.isDisabled = false;
+      } else {
+        this.submitUserInfo();
+      }
+    },
     submitUserInfo() {
       this.$refs.userForm.validate((valid) => {
         if (valid) {
@@ -119,6 +126,7 @@ export default {
             .then(() => {
               this.$message.success('操作成功');
               this.SETUSERINFO(this.userInfo);
+              this.isDisabled = true;
             });
         }
       });
