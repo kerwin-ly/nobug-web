@@ -26,7 +26,7 @@
               </span>
               <span class="members-num">
                 <icon name="user" />
-                <a>待开发</a>
+                <a>{{ item.userCount }}</a>
               </span>
             </div>
           </div>
