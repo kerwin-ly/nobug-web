@@ -1,8 +1,8 @@
 # nobug
 >A website to monitor bugs.The server project is here.https://github.com/kerwin-ly/nobug-server
 
-## Technology Stack
-Vue + ElementUI
+## Technology Stacks
+Vue + VueRouter + Vuex + Axios + ElementUI
 
 ## Start
 ```bash
