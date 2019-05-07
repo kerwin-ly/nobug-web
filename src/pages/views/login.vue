@@ -139,8 +139,7 @@ export default {
               this.$router.push({
                 path: '/index'
               });
-            })
-            .catch(() => {});
+            });
         }
       });
     },

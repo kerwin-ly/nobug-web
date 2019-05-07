@@ -21,9 +21,9 @@
                 </router-link>
               </li>
               <li>
-                <router-link :to="{ name: 'userCenter' }">
+                <a @click="showPwdDialog">
                   <icon name="vcard"/>修改密码
-                </router-link>
+                </a>
               </li>
               <li class="exit">
                 <a @click="logout">
@@ -38,6 +38,23 @@
     <el-main class="main" id="content">
       <router-view></router-view>
     </el-main>
+    <el-dialog title="修改密码" :visible.sync="isShowPwdDialog" :close-on-click-modal="false">
+      <el-form :model="pwdForm" label-width="100px" :rules="pwdRules" ref="pwdForm" status-icon>
+        <el-form-item label="原密码" prop="originPwd">
+          <el-input type="password" v-model="pwdForm.originPwd" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="新密码" prop="newPwd">
+          <el-input type="password" v-model="pwdForm.newPwd" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="确认新密码" prop="repeatPwd">
+          <el-input type="password" v-model="pwdForm.repeatPwd" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="isShowPwdDialog = false">取 消</el-button>
+        <el-button type="primary" @click="submitPwd">确 定</el-button>
+      </div>
+    </el-dialog>
   </el-container>
 </template>
 
@@ -150,15 +167,78 @@
 <script>
 import { mapState } from 'vuex';
 import { userApi } from '@/api';
+import { validate } from '@/utils';
 
 export default {
   data() {
-    return {
-      isShowUserSelect: false
+    const originPwdRule = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入原密码'));
+      } else {
+        if (validate.isLimitPwdLength(value)) {
+          callback();
+        } else {
+          callback(new Error('密码应为6-18位英文数字组成'));
+        }
+      }
     };
-  },
-  computed: {
-    ...mapState(['userInfo'])
+    const newPwdRule = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入新密码'));
+      } else {
+        if (validate.isLimitPwdLength(value)) {
+          if (value === this.pwdForm.originPwd) {
+            callback(new Error('新密码不能与原密码相同'));
+          } else {
+            callback();
+          }
+        } else {
+          callback(new Error('密码应为6-18位英文数字组成'));
+        }
+      }
+    };
+    const repeatPwdRule = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'));
+      } else {
+        if (validate.isLimitPwdLength(value)) {
+          if (value !== this.pwdForm.newPwd) {
+            callback(new Error('两次输入密码不一致'));
+          } else {
+            callback();
+          }
+        } else {
+          callback(new Error('密码应为6-18位英文数字组成'));
+        }
+      }
+    };
+
+    return {
+      isShowUserSelect: false,
+      isShowPwdDialog: false,
+      pwdRules: {
+        originPwd: [{
+          required: true, message: '请输入原密码', trigger: 'blur'
+        }, {
+          validator: originPwdRule, trigger: 'blur'
+        }],
+        newPwd: [{
+          required: true, message: '请输入新密码', trigger: 'blur'
+        }, {
+          validator: newPwdRule, trigger: 'blur'
+        }],
+        repeatPwd: [{
+          required: true, message: '请再次输入新密码', trigger: 'blur'
+        }, {
+          validator: repeatPwdRule, trigger: 'blur'
+        }]
+      },
+      pwdForm: {
+        originPwd: '',
+        newPwd: '',
+        repeatPwd: ''
+      }
+    };
   },
   mounted() {
     document.getElementById('content').onclick = () => {
@@ -166,6 +246,9 @@ export default {
         this.isShowUserSelect = false;
       }
     };
+  },
+  computed: {
+    ...mapState(['userInfo'])
   },
   methods: {
     toggleUserMenus() {
@@ -178,8 +261,28 @@ export default {
           this.$router.push({
             name: 'login'
           });
-        })
-        .catch(() => {});
+        });
+    },
+    showPwdDialog() {
+      this.isShowPwdDialog = true;
+    },
+    submitPwd() {
+      this.$refs.pwdForm.validate((valid) => {
+        if (valid) {
+          userApi.updatePwd(this.pwdForm)
+            .then(() => {
+              this.$message.success('修改密码成功，请重新登录');
+              this.logout();
+            });
+        }
+      });
+    }
+  },
+  watch: {
+    isShowPwdDialog(newVal) {
+      if (!newVal) {
+        this.$refs.pwdForm.resetFields();
+      }
     }
   }
 };

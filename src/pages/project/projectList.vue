@@ -33,7 +33,7 @@
         </el-col>
       </el-row>
     </div>
-    <el-dialog title="创建项目" :visible.sync="isShowProjectDialog">
+    <el-dialog title="创建项目" :visible.sync="isShowProjectDialog" :close-on-click-modal="false">
       <el-form :model="projectForm" label-width="100px" :rules="projectRules" ref="projectForm" status-icon>
         <el-form-item label="项目名称" prop="name">
           <el-input v-model="projectForm.name" auto-complete="off"></el-input>

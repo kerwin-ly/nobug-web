@@ -46,3 +46,15 @@ export const updateUserInfo = (data) => {
     data
   });
 };
+
+/**
+ * 修改密码
+ * @param data
+ */
+export const updatePwd = (data) => {
+  return $axios({
+    url: 'user/pwd/u',
+    method: 'post',
+    data
+  });
+};

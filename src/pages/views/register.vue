@@ -140,8 +140,7 @@ export default {
               this.$router.push({
                 name: 'login'
               });
-            })
-            .catch(() => {});
+            });
         }
       });
     },
