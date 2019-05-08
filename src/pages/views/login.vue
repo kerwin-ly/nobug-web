@@ -109,7 +109,7 @@ export default {
     return {
       loginForm: {
         email: '879688355@qq.com',
-        password: 'liyi**1021'
+        password: '123321'
       },
       loginRules: {
         email: [{

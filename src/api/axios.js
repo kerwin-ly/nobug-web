@@ -134,7 +134,7 @@ function getRequestConfig(opt) {
       data.data = options.data;
     }
   }
-  data.timespan = new Date().getTime(); // 添加随机字符串，防止ie缓存
+  // data.timespan = new Date().getTime(); // 添加随机字符串，防止ie缓存
 
   return {
     url: options.url,

@@ -16,8 +16,11 @@
       </header>
       <el-row class="project-list-content">
         <el-col :log="3" :md="3" :sm="6" class="project-item" v-for="(item, index) in projectList" :key="index">
-          <div class="project-item-main" @click="getProjectDetail">
+          <div class="project-item-main" @click="getProjectDetail(item.projectId)">
             <div class="project-index-header" :style="{backgroundColor: item.projectColor}">
+              <span @click.stop="deleteProject(item.projectId, index)">
+                <icon name="trash" class="trash"/>
+              </span>
               <a>{{ item.projectName }}</a>
             </div>
             <div class="project-index-content clear">
@@ -133,6 +136,7 @@
             transition: transform .1s linear;
 
             .project-index-header {
+              position: relative;
               height: 104px;
               padding: 10px 20px;
               border-top-left-radius: 6px;
@@ -142,6 +146,13 @@
               vertical-align: middle;
               text-align: center;
 
+              .trash {
+                position: absolute;
+                right: 6px;
+                top: 6px;
+                color: #fff;
+                z-index: 10;
+              }
               a {
                 cursor: pointer;
                 color: #fff;
@@ -221,7 +232,30 @@ export default {
           this.getProjectList();
         });
     },
-    getProjectDetail() {}
+    getProjectDetail(id) {
+      this.$router.push({
+        name: 'projectDetail',
+        query: {
+          id
+        }
+      });
+    },
+    deleteProject(id, index) {
+      this.$confirm('是否删除项目?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        closeOnClickModal: false,
+        type: 'warning'
+      })
+        .then(() => {
+          projectApi.deleteProject(id)
+            .then(() => {
+              this.$message.success('删除成功');
+              this.projectList.splice(index, 1);
+            });
+        })
+        .catch(() => {});
+    }
   },
   watch: {
     isShowProjectDialog(newVal) {
