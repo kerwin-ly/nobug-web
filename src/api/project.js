@@ -36,3 +36,14 @@ export const deleteProject = (data) => {
   });
 };
 
+/**
+ * get project detail
+ * @param data
+ */
+export const getProjectDetail = (data) => {
+  return $axios({
+    url: 'project/detail',
+    method: 'get',
+    data
+  });
+};

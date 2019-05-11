@@ -232,11 +232,11 @@ export default {
           this.getProjectList();
         });
     },
-    getProjectDetail(id) {
+    getProjectDetail(projectId) {
       this.$router.push({
         name: 'projectDetail',
-        query: {
-          id
+        params: {
+          projectId
         }
       });
     },

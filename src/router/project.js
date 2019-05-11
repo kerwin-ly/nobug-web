@@ -1,4 +1,7 @@
 
+import union from 'lodash/union';
+import issue from './issue';
+
 export default [
   {
     path: '/',
@@ -6,8 +9,11 @@ export default [
     component: () => import(/* webpackChunkName: "projectList" */ '@/pages/project/projectList')
   },
   {
-    path: '/projectDetail',
+    path: 'projectDetail/:projectId',
     name: 'projectDetail',
-    component: () => import(/* webpackChunkName: "projectDetail" */ '@/pages/project/projectDetail')
+    component: () => import(/* webpackChunkName: "projectDetail" */ '@/pages/project/projectDetail'),
+    children: union(
+      issue
+    )
   }
 ];
